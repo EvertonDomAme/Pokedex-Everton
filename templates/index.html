@@ -1,75 +1,68 @@
-<html lang="pt-BR"><!-- portugues BR -->
-<head>
-    <meta charset="UTF-8"><!-- para usar acentos e caracteres especiais -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- compatibilidade -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- escalas iniciais -->
-    <title>Pokedex Eevee(evolutions)</title><!-- título da janela -->
-    <link rel="stylesheet" href="/static/style.css"><!-- caminho para arquivo css -->
-</head>
-
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pokedex DOM</title>
+        <link rel="stylesheet" href="static/style.css" />
+    </head>
     <body>
-        <div class="pagina"><!-- classe da pagina-principal -->
-
-            <img src="/static/1778611.png" alt="Blue Edtech" width="150"><!-- logo da Blue Edtech -->
+        <div class="pagina">
+            <img src="/static/1778611.png" alt="Pokemon" width="200">
         </div>
 
-        {% if not selecionado %}<!-- Caso não haja pokemon selecionado -->
+        {% if not selecionado %}
 
             <div class="pagina">
-                <h1>Selecione um Pokémon</h1>
+                <h1>Selecione um pokémon</h1>
             </div>
 
-            <div class="lista_pokemons"><!-- classe para listagem de pokemons -->
-                {% for pokemon in pokemons %}<!-- busca pokemon dentro de pokemons am app.py -->
+            <div class="lista_pokemons">
+                {% for pokemon in pokemons %}
 
-                    {% if pokemon.disponivel %}<!-- se pokemon estiver disponivel, não selecionado -->
+                    {% if pokemon.disponivel %}
 
-                        <div class="card_pokemon" data-nome="{{pokemon.nome}}" data-numero="{{pokemon.numero}}">
-                            <!-- classe com as variaveis que recebem o nome e o numero do pokemon -->
+                        <div class="card_pokemon" data-nome="{{ pokemon.nome }}" data-numero="{{ pokemon.numero }}">
                             <div class="imagem_pokemon">
-                                <!-- classe para imagem do pokemon e nela o caminho para exibir a imagem de acordo com o numero do pokemon -->
-                                <img src="{{caminho_base_imagem}}/{{pokemon.numero}}.png"  alt="{{pokemon.nome}}">
+                                <img src="{{ caminho_base_imagem }}/{{ pokemon.numero }}.png" alt="Imagem do Pokémon">
                             </div>
 
                             <div class="nome_pokemon">
-                                <!-- classe para exibir o nome do pokemon -->
-                                <b>{{pokemon.nome}}</b>
+                                <b>{{ pokemon.nome }}</b>
                             </div>
                         </div>
 
-                    {% endif %}<!-- fechando o if -->
+                    {% endif %}
 
-                {% endfor %}<!-- fechando o for -->
+                {% endfor %}
             </div>
 
-            <div class="pagina"><!-- classe principal -->
-                <form method="POST"><!--  form com método post, para chamar a informação do pokemon -->
-                    <input type="text" name="nr_pokemon" id="nr_pokemon" style="display: none" /><!-- input com display 'none' para não aparecer na pagina -->
-                    <input type="submit" id="botao_escolher" class="botao" value="Escolher!" /><!-- input do botão de escolha -->
+            <div class="pagina">
+                <form method="POST">
+                    <input type="text" name="nr_pokemon" id="nr_pokemon" style="display: none" />
+                    <input type="submit" id="botao_escolher" class="botao" value="Escolher!" />
                 </form>
             </div>
 
-            <div class="pagina" style="display: none;"><!-- classe pagina principal, sem display -->
-                <h1 id="pokemon_selecionado">Nenhum pokémon foi selecionado.</h1><!-- informando que não há pokemnon selecionado -->
+            <div class="pagina" style="display: none;">
+                <h1 id="pokemon_selecionado">Nenhum pokémon foi selecionado.</h1>
             </div>
 
         {% else %}
+            
             <div class="pagina">
-                <h1 id="pokemon_selecionado"><!-- definição de id do pokemon selecionado e info sobre o pokemon selecionado -->
-                    Você selecionou o {{ pokemons[num_pokemon_int-1]['nome'] }} - nº {{ num_pokemon }}.
-                </h1>
+                <h1 id="pokemon_selecionado">Você selecionou o {{ pokemons[num_pokemon_int-1]['nome'] }} - nº {{ num_pokemon }}.</h1>
             </div>
-
             <div class="card_pokemon_2">
                 <div class="imagem_pokemon">
-                    <img src="{{caminho_base_imagem}}/{{pokemon.numero}}.png" alt="{{pokemon.nome}}">
+                    <img src="{{ caminho_base_imagem }}/{{ num_pokemon }}.png" alt="Imagem do Pokémon">
                 </div>
-                <!-- toda descrição do pokemon ao ser escolhido -->
+
                 <div class="nome_pokemon_2">
-                    <b>Descrição: </b> <i>{{ pokemons[]['descricao'] }}</i>
+                    <b>Descrição: </b> <i>{{ pokemons[num_pokemon_int-1]['descricao'] }}</i>
                 </div>
                 <div class="nome_pokemon_2">
-                    <b>Altura: </b> {{ pokemons[num_pokemon_int]['altura'] }}
+                    <b>Altura: </b> {{ pokemons[num_pokemon_int-1]['altura'] }}
                 </div>
                 <div class="nome_pokemon_2">
                     <b>Categoria: </b> {{ pokemons[num_pokemon_int-1]['categoria'] }}
@@ -85,9 +78,8 @@
                 </div>
             </div>
             <div class="pagina">
-                <button onclick="history.go(-1);" class="botao">Voltar</button><!-- botão de voltar a pagina de escolha -->
+                <button onclick="history.go(-1);" class="botao">Voltar</button>
             </div>
-
 
         {% endif %}
         <script type="text/javascript" src="static/index.js"></script>

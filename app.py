@@ -1,18 +1,14 @@
 from flask import (
     Blueprint, render_template, request
-) #blueprint para rotear as aplicações, render_template para html e variaveis, request para os métodos get e post.
-
-from flask import Flask # importando apliacação Flask.
+)
+from flask import Flask
 
 app = Flask(__name__)
 
 bp = Blueprint('app', __name__)
 
-@bp.route('/', methods=('GET', 'POST')) #rota para blueprint.
-def index():                            #adição de dados para index.
-
-
-    #lista de dados ou caminho para os dados.
+@bp.route('/', methods=('GET', 'POST'))
+def index():
     pokemons = [
         {
             'numero': '001',
@@ -114,33 +110,29 @@ def index():                            #adição de dados para index.
             'habilidade': 'Torrent',
             'tipo': 'Água',
         }
-]
+    ]
 
     caminho_base_imagem = 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/'
-    #caminho para exibir a imagem do pokemon
-
-    if request.method == "POST":                 #método de request Post, para pokemon selecionado
-        num_pokemon = request.form['nr_pokemon'] #número do pokemon
-        selecionado = True                       #true para selecionado, quando há um pokemon selecionado
-        num_pokemon_int = int(num_pokemon)       #transfomando o número do pokemon em inteiro
-
+    
+    if request.method == "POST":
+        num_pokemon = request.form['nr_pokemon']
+        selecionado = True
+        num_pokemon_int = int(num_pokemon)
     else:
-        selecionado = False #pokemon não selecionado
-        num_pokemon = '000' #número pokemon string
-        num_pokemon_int = 0 #número pokemon inteiro
-    #definindo valores das variaveis quando não há pokemon selecionado
+        selecionado = False
+        num_pokemon = '000'
+        num_pokemon_int = 0
 
     return render_template(
         'index.html',
-        pokemons=pokemons,                       #pokemons e seus dados
-        caminho_base_imagem=caminho_base_imagem, #caminho url/link para exibir imagem do pokemon
-        selecionado=selecionado,                 #variavel que recebe o valor de pokemon selecionado ou não selecionado
-        num_pokemon=num_pokemon,                 #variavel que recebe o numero do pokemon string
-        num_pokemon_int=num_pokemon_int          #variavel que recebe o numero do pokemon inteiro
-    ) #retornando os valores das variaveis e do arquivo index.html
+        pokemons=pokemons,
+        caminho_base_imagem=caminho_base_imagem,
+        selecionado=selecionado,
+        num_pokemon=num_pokemon,
+        num_pokemon_int=num_pokemon_int
+    )
 
 app.register_blueprint(bp)
 
-# Habilitando execução python app.py (hot reload)):
 if __name__ == "__main__":
     app.run(debug=True)
